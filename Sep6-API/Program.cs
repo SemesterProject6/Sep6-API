@@ -1,4 +1,6 @@
 using Sep6_API.Data.Actors;
+using SEP6_Api.Data.Movies;
+using SEP6_API.Data.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IActorService, ActorService>();
+builder.Services.AddSingleton<IMovieService, MovieService>();
 
 var app = builder.Build();
 
