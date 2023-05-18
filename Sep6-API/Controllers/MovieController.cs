@@ -4,7 +4,9 @@ using SEP6_API.Data.Movies;
 
 namespace Sep6_API.Controllers
 {
-    public class MovieController : Controller
+    [Route("[controller]")]
+    [ApiController]
+    public class MovieController : ControllerBase
     {
         IMovieService movieService;
 
@@ -77,5 +79,6 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+     
     }
 }
