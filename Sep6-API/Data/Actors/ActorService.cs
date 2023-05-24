@@ -24,5 +24,28 @@ namespace Sep6_API.Data.Actors
             return movie;
         }
 
+        public async Task<CreditsForMovies> GetMovieCreditsByActorId(int actorId)
+        {
+            string message = await client.GetStringAsync(url + "/" + actorId + "/movie_credits" + apiKey);
+            CreditsForMovies result = JsonSerializer.Deserialize<CreditsForMovies>(message);
+            return result;
+        }
+
+        public async Task<ListOfActors> GetPopularActors(int page)
+        {
+            string message = await client.GetStringAsync(url + "popular" + apiKey + "&language=en-US&page=" + page);
+            ListOfActors result = JsonSerializer.Deserialize<ListOfActors>(message);
+            return result;
+        }
+
+        public async Task<ListOfActors> GetActorsBySearch(int page, string query)
+        {
+            string newUrl = url.Remove(url.IndexOf('3') + 1);
+            Console.WriteLine(newUrl);
+            var moviesUrl = newUrl + "/search/person" + apiKey + "&query=" + query + "&page=" + page;
+            string message = await client.GetStringAsync(moviesUrl);
+            ListOfActors results = JsonSerializer.Deserialize<ListOfActors>(message);
+            return results;
+        }
     }
 }

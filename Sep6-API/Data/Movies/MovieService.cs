@@ -39,7 +39,7 @@ namespace SEP6_Api.Data.Movies
 
         public async Task<ListOfMovies> GetMoviesByRating(int page)
         {
-            var moviesUrl = apiKey + "&language=en-US&sort_by=vote_average.asc&vote_count.gte=215&vote_average.gte=3&page=";
+            var moviesUrl = apiKey + "&language=en-US&sort_by=vote_average.desc&vote_count.gte=215&vote_average.gte=3&page=";
             if (page != 0)
                 moviesUrl += page;
             string message = await client.GetStringAsync(newUrl + moviesUrl);
@@ -56,6 +56,12 @@ namespace SEP6_Api.Data.Movies
             string message = await client.GetStringAsync(newUrl + moviesUrl);
             ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
             return results;
+        }
+        public async Task<Credits> GetCreditsByMovieId(int movieId)
+        {
+            string message = await client.GetStringAsync(url + movieId + "/credits" + apiKey + "&language=en-US");
+            Credits result = JsonSerializer.Deserialize<Credits>(message);
+            return result;
         }
     }
 }
