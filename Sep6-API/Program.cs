@@ -1,5 +1,4 @@
 using Sep6_API.Data.Actors;
-using SEP6_Api.Data.Movies;
 using SEP6_API.Data.Movies;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,17 +1,20 @@
-﻿using Sep6_API.Models;
-using SEP6_API.Data.Movies;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Sep6_API.Models;
 
-namespace SEP6_Api.Data.Movies
+namespace SEP6_API.Data.Movies
 {
     public class MovieService : IMovieService
     {
-
-        string url = "https://api.themoviedb.org/3/movie/";
-        string newUrl = "https://api.themoviedb.org/3/discover/movie";
-        HttpClient client;
+        private readonly string url = "https://api.themoviedb.org/3/movie/";
+        private readonly string newUrl = "https://api.themoviedb.org/3/discover/movie";
+        private readonly HttpClient client;
         private readonly IConfiguration configuration;
-        private string apiKey;
+        private readonly string apiKey;
 
         public MovieService(IConfiguration iConfig)
         {
@@ -29,8 +32,7 @@ namespace SEP6_Api.Data.Movies
 
         public async Task<ListOfMovies> GetMoviesBySearch(int page, string query)
         {
-            string newUrl = url.Remove(url.IndexOf('3') + 1); 
-            Console.WriteLine(newUrl);
+            string newUrl = url.Remove(url.IndexOf('3') + 1);
             var moviesUrl = newUrl + "/search/movie" + apiKey + "&query=" + query + "&page=" + page;
             string message = await client.GetStringAsync(moviesUrl);
             ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
@@ -46,7 +48,6 @@ namespace SEP6_Api.Data.Movies
             ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
             return results;
         }
-      
 
         public async Task<ListOfMovies> GetMoviesByTitle(int page)
         {
@@ -57,11 +58,20 @@ namespace SEP6_Api.Data.Movies
             ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
             return results;
         }
+
         public async Task<Credits> GetCreditsByMovieId(int movieId)
         {
             string message = await client.GetStringAsync(url + movieId + "/credits" + apiKey + "&language=en-US");
             Credits result = JsonSerializer.Deserialize<Credits>(message);
             return result;
         }
+
+        public async Task<VideoList> GetVideosByMovieId(int movieId)
+        {
+            string message = await client.GetStringAsync(url + movieId + "/videos" + apiKey);
+            VideoList result = JsonSerializer.Deserialize<VideoList>(message);
+            return result;
+        }
+
     }
 }
