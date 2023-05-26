@@ -1,17 +1,23 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Npgsql;
 using Sep6_API.Data.Actors;
+using Sep6_API.Data.Users;
+
+using Sep6_API.Models;
+using Sep6_API.Persistence.User;
 using SEP6_API.Data.Movies;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IActorService, ActorService>();
 builder.Services.AddSingleton<IMovieService, MovieService>();
-
+builder.Services.AddSingleton<IUserService, UserService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
