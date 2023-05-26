@@ -4,7 +4,7 @@ using Sep6_API.Models;
 
 namespace Sep6_API.Controllers
 {
-        [Route("api/[controller]")]
+        [Route("[controller]")]
         [ApiController]
         public class UserController : ControllerBase
         {
