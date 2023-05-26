@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Sep6_API.Models;
 using SEP6_API.Data.Movies;
 
@@ -8,7 +12,7 @@ namespace Sep6_API.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        IMovieService movieService;
+        private readonly IMovieService movieService;
 
         public MovieController(IMovieService movieService)
         {
@@ -31,6 +35,24 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet("{id}/videos")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VideoList))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<VideoList>> GetVideosByMovieId(int id)
+        {
+            try
+            {
+                VideoList videos = await movieService.GetVideosByMovieId(id);
+                return Ok(videos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
         [HttpGet("ByRating")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -47,6 +69,7 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
         [HttpGet("ByTitle")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -63,7 +86,8 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        [HttpGet("search/")]
+
+        [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ListOfMovies>> SearchForMovies([FromQuery] int page, [FromQuery] string query)
@@ -96,6 +120,5 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
     }
 }
