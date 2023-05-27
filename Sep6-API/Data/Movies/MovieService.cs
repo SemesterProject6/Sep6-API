@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -72,6 +73,17 @@ namespace SEP6_API.Data.Movies
             VideoList result = JsonSerializer.Deserialize<VideoList>(message);
             return result;
         }
+        public async Task<CrewMember> GetDirectorByMovieId(int movieId)
+        {
+            string message = await client.GetStringAsync(url + movieId + "/credits" + apiKey);
+            Credits credits = JsonSerializer.Deserialize<Credits>(message);
+
+            // Assuming the director is the first crew member with the job title "Director"
+            var director = credits.Crew.FirstOrDefault(crew => crew.Job == "Director");
+
+            return director;
+        }
+
 
         public async Task<ListOfMovies> GetNowPlayingMovies(int page)
         {
