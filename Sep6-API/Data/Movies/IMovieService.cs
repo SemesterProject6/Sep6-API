@@ -11,6 +11,8 @@ namespace SEP6_API.Data.Movies
         Task<ListOfMovies> GetMoviesByTitle(int page);
         Task<ListOfMovies> GetMoviesBySearch(int page, string query);
         Task<ListOfMovies> GetNowPlayingMovies(int page);
+        Task<ListOfMovies> GetPopularMovies(int page);
+        Task<ListOfMovies> GetUpcomingMovies(int page);
         Task<Credits> GetCreditsByMovieId(int movieId);
         Task<VideoList> GetVideosByMovieId(int movieId);
         Task<CrewMember> GetDirectorByMovieId(int movieId);

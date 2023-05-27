@@ -156,5 +156,39 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet("Popular")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ListOfMovies>> GetPopularMovies([FromQuery] int page)
+        {
+            try
+            {
+                ListOfMovies movies = await movieService.GetPopularMovies(page);
+                return Ok(movies);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("Upcoming")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ListOfMovies>> GetUpcomingMovies([FromQuery] int page)
+        {
+            try
+            {
+                ListOfMovies movies = await movieService.GetUpcomingMovies(page);
+                return Ok(movies);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
