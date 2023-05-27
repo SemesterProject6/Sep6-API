@@ -120,5 +120,22 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet("NowPlaying")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListOfMovies))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ListOfMovies>> GetNowPlayingMovies([FromQuery] int page)
+        {
+            try
+            {
+                ListOfMovies movies = await movieService.GetNowPlayingMovies(page);
+                return Ok(movies);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

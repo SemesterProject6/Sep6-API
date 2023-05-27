@@ -73,5 +73,14 @@ namespace SEP6_API.Data.Movies
             return result;
         }
 
+        public async Task<ListOfMovies> GetNowPlayingMovies(int page)
+        {
+            var moviesUrl = "now_playing" + apiKey + "&language=en-US&page=";
+            if (page != 0)
+                moviesUrl += page;
+            string message = await client.GetStringAsync(url+moviesUrl);
+            ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
+            return results;
+        }
     }
 }
