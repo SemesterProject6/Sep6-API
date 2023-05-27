@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Sep6_API.Data.Actors;
+using Sep6_API.Data.FavoriteMovies;
 using Sep6_API.Data.Users;
 
 using Sep6_API.Models;
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IActorService, ActorService>();
 builder.Services.AddSingleton<IMovieService, MovieService>();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IFavoriteMovieService, FavoriteMovieService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
