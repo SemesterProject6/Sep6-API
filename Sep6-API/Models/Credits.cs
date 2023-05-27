@@ -9,5 +9,7 @@ namespace Sep6_API.Models
 
         [JsonPropertyName("cast")]
         public List<Actor> Actors { get; set; }
+        [JsonPropertyName("crew")]
+        public List<CrewMember> Crew { get; set; }
     }
 }
