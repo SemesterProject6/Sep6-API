@@ -120,5 +120,24 @@ namespace Sep6_API.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet("{id}/director")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CrewMember))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CrewMember>> GetDirectorByMovieId(int id)
+        {
+            try
+            {
+                CrewMember director = await movieService.GetDirectorByMovieId(id);
+                return Ok(director);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+
     }
 }
