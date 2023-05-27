@@ -94,5 +94,25 @@ namespace SEP6_API.Data.Movies
             ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
             return results;
         }
+
+        public async Task<ListOfMovies> GetPopularMovies(int page)
+        {
+            var moviesUrl = "popular" + apiKey + "&language=en-US&page=";
+            if (page != 0)
+                moviesUrl += page;
+            string message = await client.GetStringAsync(url + moviesUrl);
+            ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
+            return results;
+        }
+
+        public async Task<ListOfMovies> GetUpcomingMovies(int page)
+        {
+            var moviesUrl = "upcoming" + apiKey + "&language=en-US&page=";
+            if (page != 0)
+                moviesUrl += page;
+            string message = await client.GetStringAsync(url + moviesUrl);
+            ListOfMovies results = JsonSerializer.Deserialize<ListOfMovies>(message);
+            return results;
+        }
     }
 }
