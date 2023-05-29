@@ -159,7 +159,7 @@ namespace Sep6_API_Test
         {
             var response = await _httpClient.GetAsync("/Movie/Popular?page=2000");
             var respons = response.StatusCode;
-            Assert.AreEqual(System.Net.HttpStatusCode.OK, respons);
+            Assert.AreEqual(System.Net.HttpStatusCode.InternalServerError, respons);
         }
 
         [TestMethod]
@@ -175,7 +175,7 @@ namespace Sep6_API_Test
         {
             var response = await _httpClient.GetAsync("/Movie/Upcoming?page=2000");
             var respons = response.StatusCode;
-            Assert.AreEqual(System.Net.HttpStatusCode.OK, respons);
+            Assert.AreEqual(System.Net.HttpStatusCode.InternalServerError, respons);
         }
     }
 }

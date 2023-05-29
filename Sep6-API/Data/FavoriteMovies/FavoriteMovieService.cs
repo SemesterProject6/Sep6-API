@@ -39,7 +39,7 @@ namespace Sep6_API.Data.FavoriteMovies
         {
             var movieIdList = await repo.GetFavoriteMoviesByID(userID);
 
-            List<Movie> toReturn = new List<Movie>();
+            List<Movie> toReturn = new();
             
             foreach (var movieId in movieIdList)
             {
@@ -52,7 +52,7 @@ namespace Sep6_API.Data.FavoriteMovies
         {
             var movieList = await repo.GetFavoriteMoviesByID(userID);
 
-            ListOfMovies toReturn = new ListOfMovies
+            ListOfMovies toReturn = new()
             {
                 CurrentPage = 1,
                 Movies = new List<Movie>()
